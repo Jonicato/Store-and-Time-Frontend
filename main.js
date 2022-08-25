@@ -3,34 +3,34 @@ const burguerMenu = document.querySelector('.menu');
 const desktopMenu = document.querySelector('.desktop-menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const cartButton = document.querySelector('.navbar-shopping-cart')
-const asideCart = document.querySelector('.product-detail')
+const shoppingCartContainer = document.querySelector('#shoppingCartContainer')
 const cards = document.querySelector('.cards-container')
 
 menuEmail.addEventListener('click', toggleMenuDesktop);
 burguerMenu.addEventListener('click', toggleMenuMobile);
-cartButton.addEventListener('click', toggleAsideCart);
+cartButton.addEventListener('click', toggleshoppingCartContainer);
 
 function toggleMenuDesktop() {
-    const isAsideCartClosed = asideCart.classList.contains('inactive-cart');
+    const isshoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
 
-    if (!isAsideCartClosed) {
-        asideCart.classList.add('inactive-cart');
+    if (!isshoppingCartContainerClosed) {
+        shoppingCartContainer.classList.add('inactive-cart');
     }
 
     desktopMenu.classList.toggle('inactive')
 }
 
 function toggleMenuMobile() {
-    const isAsideCartClosed = asideCart.classList.contains('inactive-cart');
+    const isshoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
 
-    if (!isAsideCartClosed) {
-        asideCart.classList.add('inactive-cart');
+    if (!isshoppingCartContainerClosed) {
+        shoppingCartContainer.classList.add('inactive-cart');
     }
 
     mobileMenu.classList.toggle('inactive-mobile')
 }
 
-function toggleAsideCart() {
+function toggleshoppingCartContainer() {
     const isMobileMenuClosed = mobileMenu.classList.contains('inactive-mobile');
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
     
@@ -42,7 +42,7 @@ function toggleAsideCart() {
         desktopMenu.classList.add('inactive');
     }
 
-    asideCart.classList.toggle('inactive-cart');
+    shoppingCartContainer.classList.toggle('inactive-cart');
 }
 
 const arrProducts = [
