@@ -25,6 +25,10 @@ nav {
     display: none;
 }
 
+.home {
+    margin-top: 12px;
+}
+
 .logo {
     width: 150px;
 }

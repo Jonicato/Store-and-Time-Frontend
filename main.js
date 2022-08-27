@@ -7,108 +7,58 @@ const shoppingCartContainer = document.querySelector('#shoppingCartContainer')
 const productDetailContainer = document.querySelector('#productDetail')
 const cards = document.querySelector('.cards-container')
 
+const allProducts = document.querySelector('#allProducts');
+const clothesProducts = document.querySelector('#clothes');
+const electronicsProducts = document.querySelector('#electronics');
+const furnituresProducts = document.querySelector('#furnitures');
+const toysProducts = document.querySelector('#toys');
+const othersProducts = document.querySelector('#others');
+
 menuEmail.addEventListener('click', toggleMenuDesktop);
 burguerMenu.addEventListener('click', toggleMenuMobile);
 cartButton.addEventListener('click', toggleshoppingCartContainer);
+allProducts.addEventListener('click', renderProducts);
+clothesProducts.addEventListener('click', clothesProductsRender);
+electronicsProducts.addEventListener('click', electronicsProductsRender);
+furnituresProducts.addEventListener('click', furnituresProductsRender);
+toysProducts.addEventListener('click', toysProductsRender);
+othersProducts.addEventListener('click', othersProductsRender);
 
-function toggleMenuDesktop() {
-    const isShoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
-    const isProductDetailContainer = productDetailContainer.classList.contains('inactive-cart');
-
-    if (!isShoppingCartContainerClosed) {
-        shoppingCartContainer.classList.add('inactive-cart');
-    }
-
-    if (!isProductDetailContainer) {
-        productDetailContainer.classList.add('inactive-cart');
-    }
-    
-    desktopMenu.classList.toggle('inactive')
-}
-
-function toggleMenuMobile() {
-    const isShoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
-    
-    if (!isShoppingCartContainerClosed) {
-        shoppingCartContainer.classList.add('inactive-cart');
-    }
-
-    closeProductDetailAside();
-
-    mobileMenu.classList.toggle('inactive-mobile')
-}
-
-function toggleshoppingCartContainer() {
-    const isMobileMenuClosed = mobileMenu.classList.contains('inactive-mobile');
-    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
-    const isProductDetailContainer = productDetailContainer.classList.contains('inactive-cart');
-    
-    if (!isMobileMenuClosed) {
-        mobileMenu.classList.add('inactive-mobile');
-    }
-    
-    if (!isDesktopMenuClosed) {
-        desktopMenu.classList.add('inactive');
-    }
-
-    if (!isProductDetailContainer) {
-        productDetailContainer.classList.add('inactive-cart');
-    }
-    
-    shoppingCartContainer.classList.toggle('inactive-cart');
-}
-
-function openProductDetailAside(product) {
-    const isShoppingCartContainer = shoppingCartContainer.classList.contains('inactive-cart');
-    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
-
-    renderDetails(product);
-
-    if (!isShoppingCartContainer) {
-        shoppingCartContainer.classList.add('inactive-cart');
-    }
-
-    if (!isDesktopMenuClosed) {
-        desktopMenu.classList.add('inactive');
-    }
-
-    productDetailContainer.classList.remove('inactive-cart');
-}
-
-function closeProductDetailAside() {
-    productDetailContainer.classList.add('inactive-cart');
-}
-
-const arrProducts = [
+let arrProducts = [
     {
-        name: 'Bike',
-        price: 120,
-        image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-        description: 'This bike is the most wonderful transport that yu can use. It can brings you to the mountains and inside the city.'
+        name: 'Knitted sweater',
+        price: 130,
+        image: 'https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        description: 'This beautiful sweater has been knitted by artisan hands and now comes to warm you up in cold weather. With 100% cotton fabric, treat yourself to hot chocolate like this sweater.',
+        category: 'clothes'
     },
     {
-        name: 'Laptop',
-        price: 320,
-        image: 'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'The most powerful laptop of all times. It has the new best-seller processor and a big storage.'
-    },
-    {
-        name: 'Spit',
-        price: 150,
-        image: 'https://images.pexels.com/photos/9385887/pexels-photo-9385887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'With its practical design, this bike will bring you to the most beautiful places. Its pieces are made of the most durable materials in the industry.'
-    },
-    {
-        name: 'Desktop',
-        price: 80,
-        image: 'https://images.pexels.com/photos/2811648/pexels-photo-2811648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'With its practical design, this bike will bring you to the most beautiful places. Its pieces are made of the most durable materials in the industry.'
-    },
-    {
-        name: 'Bed',
+        name: 'Green high top sneakers',
         price: 200,
-        image: 'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'With its practical design, this bike will bring you to the most beautiful places. Its pieces are made of the most durable materials in the industry.'
+        image: 'https://images.pexels.com/photos/934069/pexels-photo-934069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        description: 'These sneakers besides being cute are super comfortable. You will be able to walk in style without worrying about foot pain.',
+        category: 'clothes'
+    },
+    {
+        name: 'Tie',
+        price: 50,
+        image: 'https://images.pexels.com/photos/45055/pexels-photo-45055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        description: 'Arrive at your important meetings with this elegant tie.',
+        category: 'clothes'
+    },
+    {
+        name: 'Shoes',
+        price: 100,
+        image: 'https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg?auto=compress&cs=tinysrgb&w=600',
+        description: 'Show off your elegance as you walk down the path to success in these stunning formal shoes.',
+        category: 'clothes'
+    },
+    {
+        name: 'Jacket',
+        price: 200,
+        image: 'https://images.pexels.com/photos/54203/pexels-photo-54203.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        description: 'Protect yourself from the cold weather with this beautiful and comfortable jacket. Go out and enjoy the weather without giving up your warmth.',
+        category: 'clothes'
     },
     {
         name: 'Skateboard',
@@ -202,13 +152,131 @@ const arrProducts = [
     }
 ];
 
+function clothesProductsRender() {
+    cards.innerHTML = ''
+    event.preventDefault();
+    productsByCategory(arrProducts, 'clothes')
+}
+
+function electronicsProductsRender(arrProducts) {
+    cards.innerHTML = ''
+    event.preventDefault();
+    productsByCategory(arrProducts, 'electronics')
+}
+
+function furnituresProductsRender(arrProducts) {
+    cards.innerHTML = ''
+    event.preventDefault();
+    productsByCategory(arrProducts, 'furnitures')
+}
+
+function toysProductsRender(arrProducts) {
+    cards.innerHTML = ''
+    event.preventDefault();
+    productsByCategory(arrProducts, 'toys')
+}
+
+function othersProductsRender(arrProducts) {
+    cards.innerHTML = ''
+    event.preventDefault();
+    productsByCategory(arrProducts, 'others')
+}
+
+function toggleMenuDesktop() {
+    const isShoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
+    const isProductDetailContainer = productDetailContainer.classList.contains('inactive-cart');
+
+    if (!isShoppingCartContainerClosed) {
+        shoppingCartContainer.classList.add('inactive-cart');
+    }
+
+    if (!isProductDetailContainer) {
+        productDetailContainer.classList.add('inactive-cart');
+    }
+    
+    desktopMenu.classList.toggle('inactive')
+}
+
+function toggleMenuMobile() {
+    const isShoppingCartContainerClosed = shoppingCartContainer.classList.contains('inactive-cart');
+    
+    if (!isShoppingCartContainerClosed) {
+        shoppingCartContainer.classList.add('inactive-cart');
+    }
+
+    closeProductDetailAside();
+
+    mobileMenu.classList.toggle('inactive-mobile')
+}
+
+function toggleshoppingCartContainer() {
+    const isMobileMenuClosed = mobileMenu.classList.contains('inactive-mobile');
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isProductDetailContainer = productDetailContainer.classList.contains('inactive-cart');
+    
+    if (!isMobileMenuClosed) {
+        mobileMenu.classList.add('inactive-mobile');
+    }
+    
+    if (!isDesktopMenuClosed) {
+        desktopMenu.classList.add('inactive');
+    }
+
+    if (!isProductDetailContainer) {
+        productDetailContainer.classList.add('inactive-cart');
+    }
+    
+    shoppingCartContainer.classList.toggle('inactive-cart');
+}
+
+function openProductDetailAside(product) {
+    const isShoppingCartContainer = shoppingCartContainer.classList.contains('inactive-cart');
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+
+    closeProductDetailAside();
+
+    renderDetails(product);
+
+    if (!isShoppingCartContainer) {
+        shoppingCartContainer.classList.add('inactive-cart');
+    }
+
+    if (!isDesktopMenuClosed) {
+        desktopMenu.classList.add('inactive');
+    }
+
+    productDetailContainer.classList.remove('inactive-cart');
+}
+
+function closeProductDetailAside() {
+    productDetailContainer.classList.add('inactive-cart');
+
+    productDetailContainer.innerHTML = '';
+}
+
+
+function productsByCategory(arrProducts, category) {
+    let arrProductsByCategory = [];
+
+    for (let product of arrProducts) {
+        if (product.category == category) {
+            arrProductsByCategory.push(product);
+        }
+    }
+
+    renderProducts(arrProductsByCategory);
+}
+
 function renderProducts(arrProducts) {
+
     arrProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
         productCard.addEventListener('click', () => {
             openProductDetailAside(product)
         })
+
+        console.log(product);
         
         const productImg = document.createElement('img');
         productImg.setAttribute('src', product.image);
@@ -240,7 +308,6 @@ function renderProducts(arrProducts) {
 }
 
 function renderDetails(product) {
-    console.log(product);
         
     let productDetailCloseContainer = document.createElement('div')
     productDetailCloseContainer.setAttribute('class', 'product-detail-close')
@@ -280,4 +347,5 @@ function renderDetails(product) {
     productDetailContainer.append(productDetailCloseContainer, imgProductDetail, productInfo);
 }
 
+console.log('Ja! Imbécil');
 renderProducts(arrProducts);
